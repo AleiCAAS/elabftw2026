@@ -66,7 +66,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner   // ✅ 正确的导入路径
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.elabftwclient.webview.WebViewDownloadHandler
 import com.example.elabftwclient.webview.WebViewFileChooser
 
@@ -160,7 +160,7 @@ fun WebViewScreen(
                 .fillMaxSize()
                 .statusBarsPadding(),
             factory = { ctx ->
-                WebView(ctx).apply {
+                WebView(ctx).apply outer@ {
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
@@ -190,7 +190,7 @@ fun WebViewScreen(
 
                     CookieManager.getInstance().apply {
                         setAcceptCookie(true)
-                        setAcceptThirdPartyCookies(this@apply, true)
+                        setAcceptThirdPartyCookies(this@outer, true)
                     }
 
                     webViewClient = object : WebViewClient() {
